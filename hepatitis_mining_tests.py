@@ -1,11 +1,11 @@
 # import libraries
+import os   # for file system manipulations
+import numpy as np  # for arrays and other mathematical operations
+import statsmodels.api as sm    # for regressions and statistical models
 import pandas as pd # for dataframe processing
 import matplotlib   # for plots
 import matplotlib.pyplot as plt # for plots
 import seaborn as sns   # for plots
-import os   # for file system manipulations
-import numpy as np  # for arrays and other mathematical operations
-import statsmodels.api as sm    # for regressions and statistical models
 
 # all sklearn imports
 from sklearn.preprocessing import StandardScaler    # for scaling values
@@ -17,6 +17,8 @@ from sklearn.tree import DecisionTreeClassifier    # for decision tree classifie
 from sklearn.feature_selection import RFE   # for RFE
 from sklearn.linear_model import LassoCV
 
+# import custom library
+from SaVY_library import display_class_distribution_plot
 
 plots_on = False
 
@@ -35,10 +37,7 @@ if plots_on:
     sns.set(style="whitegrid")
 
     # 1. Plot the frequency of the Class variable
-    plt.figure(figsize=(6, 4))
-    sns.countplot(x='Class', data=df, palette={1: "blue", 0: "red"})
-    plt.title('Distribution of Class Variable (1: Died, 0: Lived)')
-    plt.show()
+    display_class_distribution_plot(df, 'Class')
 
     # 2. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
     plt.figure(figsize=(8, 6))
@@ -318,10 +317,7 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    plt.figure(figsize=(6, 4))
-    sns.countplot(x='Class', data=sampled_data, palette={1: "blue", 0: "red"})
-    plt.title('Distribution of Class Variable (1: Died, 0: Lived)')
-    plt.show()
+    display_class_distribution_plot(sampled_data, 'Class')
 
     # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
     plt.figure(figsize=(8, 6))
@@ -352,10 +348,7 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    plt.figure(figsize=(6, 4))
-    sns.countplot(x='Class', data=sampled_data, palette={1: "blue", 0: "red"})
-    plt.title('Distribution of Class Variable (1: Died, 0: Lived)')
-    plt.show()
+    display_class_distribution_plot(sampled_data, 'Class')
 
     # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
     plt.figure(figsize=(8, 6))
@@ -397,10 +390,7 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    plt.figure(figsize=(6, 4))
-    sns.countplot(x='Class', data=sampled_data, palette={1: "blue", 0: "red"})
-    plt.title('Distribution of Class Variable (1: Died, 0: Lived)')
-    plt.show()
+    display_class_distribution_plot(sampled_data, 'Class')
 
     # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
     plt.figure(figsize=(8, 6))
@@ -436,10 +426,7 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    plt.figure(figsize=(6, 4))
-    sns.countplot(x='Class', data=sampled_data, palette={1: "blue", 0: "red"})
-    plt.title('Distribution of Class Variable (1: Died, 0: Lived)')
-    plt.show()
+    display_class_distribution_plot(sampled_data, 'Class')
 
     # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
     plt.figure(figsize=(8, 6))
