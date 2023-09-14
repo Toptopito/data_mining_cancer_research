@@ -12,13 +12,14 @@ from sklearn.preprocessing import StandardScaler    # for scaling values
 from sklearn.decomposition import PCA   # for principal components
 from sklearn.impute import SimpleImputer    # to impute values
 from sklearn.ensemble import RandomForestClassifier # for random forest classifier
-from sklearn.feature_selection import SelectFromModel   # for feature extraction
+from sklearn.feature_selection import SelectFromModel, RFE   # for feature extraction
 from sklearn.tree import DecisionTreeClassifier    # for decision tree classifier
-from sklearn.feature_selection import RFE   # for RFE
 from sklearn.linear_model import LassoCV
 
 # import custom library
-from SaVY_library import display_class_distribution_plot
+from SaVY_library import \
+    display_class_distribution, \
+    display_attribute_v_class_distribution
 
 plots_on = False
 
@@ -33,29 +34,12 @@ df['Class'] = df['Class'].map({1: 1, 2: 0})
 df.columns = [col.strip() for col in df.columns]
 
 if plots_on:
-    # Set the style of visualization
-    sns.set(style="whitegrid")
-
     # 1. Plot the frequency of the Class variable
-    display_class_distribution_plot(df, 'Class')
+    display_class_distribution(df, 'Class', label0="Lived", label1="Died")
 
-    # 2. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
-    plt.figure(figsize=(8, 6))
-    sns.kdeplot(df[df['Class'] == 1]['ALBUMIN'], fill=True, color="blue", label="Died")
-    sns.kdeplot(df[df['Class'] == 0]['ALBUMIN'], fill=True, color="red", label="Lived")
-    plt.title('Distribution of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Density')
-    plt.legend()
-    plt.show()
+    # 2. Plot separate distributions for the ALBUMIN variable based on the Class
+    display_attribute_v_class_distribution(df, 'Class', 'ALBUMIN', label0="Lived", label1="Died")
 
-    # 3 Plot separate histograms for the ALBUMIN variable based on the Class
-    plt.figure(figsize=(8, 6))
-    sns.histplot(data=df, x='ALBUMIN', hue='Class', palette={1: "blue", 0: "red"}, bins=30, kde=False, element="step")
-    plt.title('Histogram of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Count')
-    plt.show()
 
 # SECTION 2: FINDING PRINCIPAL COMPONENTS (SIMPLE)
 # 1. Define features variable
@@ -317,25 +301,10 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    display_class_distribution_plot(sampled_data, 'Class')
+    display_class_distribution(sampled_data, 'Class', label0="Lived", label1="Died")
 
-    # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
-    plt.figure(figsize=(8, 6))
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 1]['ALBUMIN'], fill=True, color="blue", label="Died")
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 0]['ALBUMIN'], fill=True, color="red", label="Lived")
-    plt.title('Distribution of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Density')
-    plt.legend()
-    plt.show()
-
-    # c Plot separate histograms for the ALBUMIN variable based on the Class
-    plt.figure(figsize=(8, 6))
-    sns.histplot(data=sampled_data, x='ALBUMIN', hue='Class', palette={1: "blue", 0: "red"}, bins=30, kde=False, element="step")
-    plt.title('Histogram of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Count')
-    plt.show()
+    # b. Plot separate distributions for the ALBUMIN variable based on the Class
+    display_attribute_v_class_distribution(sampled_data, 'Class', 'ALBUMIN', label0="Lived", label1="Died")
 
 # 2. Random resampling with replacement
 sampled_data = df.sample(frac=0.5, replace=True)   # assume sample size is 50%
@@ -348,25 +317,10 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    display_class_distribution_plot(sampled_data, 'Class')
+    display_class_distribution(sampled_data, 'Class', label0="Lived", label1="Died")
 
-    # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
-    plt.figure(figsize=(8, 6))
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 1]['ALBUMIN'], fill=True, color="blue", label="Died")
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 0]['ALBUMIN'], fill=True, color="red", label="Lived")
-    plt.title('Distribution of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Density')
-    plt.legend()
-    plt.show()
-
-    # c Plot separate histograms for the ALBUMIN variable based on the Class
-    plt.figure(figsize=(8, 6))
-    sns.histplot(data=sampled_data, x='ALBUMIN', hue='Class', palette={1: "blue", 0: "red"}, bins=30, kde=False, element="step")
-    plt.title('Histogram of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Count')
-    plt.show()
+    # b. Plot separate distributions for the ALBUMIN variable based on the Class
+    display_attribute_v_class_distribution(sampled_data, 'Class', 'ALBUMIN', label0="Lived", label1="Died")
 
 # 3. Resampling to balance outcome variable without replacement
 # Split data based on classes
@@ -390,25 +344,10 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    display_class_distribution_plot(sampled_data, 'Class')
+    display_class_distribution(sampled_data, 'Class', label0="Lived", label1="Died")
 
-    # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
-    plt.figure(figsize=(8, 6))
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 1]['ALBUMIN'], fill=True, color="blue", label="Died")
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 0]['ALBUMIN'], fill=True, color="red", label="Lived")
-    plt.title('Distribution of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Density')
-    plt.legend()
-    plt.show()
-
-    # c Plot separate histograms for the ALBUMIN variable based on the Class
-    plt.figure(figsize=(8, 6))
-    sns.histplot(data=sampled_data, x='ALBUMIN', hue='Class', palette={1: "blue", 0: "red"}, bins=30, kde=False, element="step")
-    plt.title('Histogram of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Count')
-    plt.show()
+    # b. Plot separate distributions for the ALBUMIN variable based on the Class
+    display_attribute_v_class_distribution(sampled_data, 'Class', 'ALBUMIN', label0="Lived", label1="Died")
 
 # 4. Resampling to balance outcome variable without replacement match original sample size
 # Calculate the number of samples to take to balance the classes and match the original dataset size
@@ -426,22 +365,7 @@ if plots_on:
     sampled_data = sampled_data.reset_index(drop=True)
 
     # a. Plot the frequency of the Class variable
-    display_class_distribution_plot(sampled_data, 'Class')
+    display_class_distribution(sampled_data, 'Class', label0="Lived", label1="Died")
 
-    # b. Plot separate distributions for the ALBUMIN variable based on the Class (density plot)
-    plt.figure(figsize=(8, 6))
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 1]['ALBUMIN'], fill=True, color="blue", label="Died")
-    sns.kdeplot(sampled_data[sampled_data['Class'] == 0]['ALBUMIN'], fill=True, color="red", label="Lived")
-    plt.title('Distribution of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Density')
-    plt.legend()
-    plt.show()
-
-    # c Plot separate histograms for the ALBUMIN variable based on the Class
-    plt.figure(figsize=(8, 6))
-    sns.histplot(data=sampled_data, x='ALBUMIN', hue='Class', palette={1: "blue", 0: "red"}, bins=30, kde=False, element="step")
-    plt.title('Histogram of ALBUMIN based on Class')
-    plt.xlabel('ALBUMIN')
-    plt.ylabel('Count')
-    plt.show()
+    # b. Plot separate distributions for the ALBUMIN variable based on the Class
+    display_attribute_v_class_distribution(sampled_data, 'Class', 'ALBUMIN', label0="Lived", label1="Died")
