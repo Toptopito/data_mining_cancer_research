@@ -14,7 +14,7 @@ from sklearn.impute import SimpleImputer    # to impute values
 from sklearn.ensemble import RandomForestClassifier # for random forest classifier
 from sklearn.feature_selection import SelectFromModel, RFE   # for feature extraction
 from sklearn.tree import DecisionTreeClassifier    # for decision tree classifier
-from sklearn.linear_model import LassoCV
+from sklearn.linear_model import LassoCV    # for Lasso cross-validation regression model
 
 # import custom library
 from SaVY_library import \
